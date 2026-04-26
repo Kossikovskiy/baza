@@ -8,10 +8,23 @@ const sectionFiles = [
   "sections/chemicals.html"
 ];
 
+function getFallback(path) {
+  if (window.BAZA_FALLBACK && window.BAZA_FALLBACK[path]) {
+    return window.BAZA_FALLBACK[path];
+  }
+  return null;
+}
+
 async function fetchHtml(path) {
-  const response = await fetch(path);
-  if (!response.ok) throw new Error(`Не удалось загрузить ${path}`);
-  return response.text();
+  try {
+    const response = await fetch(path);
+    if (!response.ok) throw new Error(`Не удалось загрузить ${path}`);
+    return await response.text();
+  } catch (error) {
+    const fallback = getFallback(path);
+    if (fallback) return fallback;
+    throw error;
+  }
 }
 
 async function loadFragment(targetId, path) {
@@ -30,5 +43,7 @@ async function loadSections() {
     await loadFragment("footer", "components/footer.html");
   } catch (error) {
     console.error("Ошибка загрузки контента:", error);
+    document.getElementById("sections").innerHTML =
+      '<div class="important-banner"><span class="ib-icon">⚠️</span><span>Не удалось загрузить разделы. Откройте проект через локальный сервер (например, <code>python3 -m http.server</code>), если используете режим <code>file://</code>.</span></div>';
   }
 })();
