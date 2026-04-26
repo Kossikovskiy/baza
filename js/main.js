@@ -1,49 +1,56 @@
-const sectionFiles = [
-  "sections/tools.html",
-  "sections/plumbing.html",
-  "sections/electricity.html",
-  "sections/walls.html",
-  "sections/furniture.html",
-  "sections/emergency.html",
-  "sections/chemicals.html"
+const pageFragments = {
+  header: 'components/header.html',
+  footer: 'components/footer.html'
+};
+
+const sections = [
+  { id: 'home', file: 'sections/home.html', label: 'Быт' },
+  { id: 'repair', file: 'sections/repair.html', label: 'Ремонт' },
+  { id: 'systems', file: 'sections/systems.html', label: 'Системы' },
+  { id: 'emergency', file: 'sections/emergency.html', label: 'Экстренное' },
+  { id: 'chemicals', file: 'sections/chemicals.html', label: 'Химия' },
+  { id: 'house', file: 'sections/house.html', label: 'Частный дом' },
+  { id: 'auto', file: 'sections/auto.html', label: 'Авто' }
 ];
 
-function getFallback(path) {
-  if (window.BAZA_FALLBACK && window.BAZA_FALLBACK[path]) {
-    return window.BAZA_FALLBACK[path];
-  }
-  return null;
+async function loadHtml(path) {
+  const response = await fetch(path);
+  if (!response.ok) throw new Error(`Ошибка загрузки: ${path}`);
+  return response.text();
 }
 
-async function fetchHtml(path) {
+function renderNav() {
+  const nav = document.createElement('nav');
+  nav.className = 'nav';
+  nav.setAttribute('aria-label', 'Разделы помощи');
+  nav.innerHTML = sections
+    .map((section) => `<a href="#${section.id}">${section.label}</a>`)
+    .join('');
+  return nav;
+}
+
+async function init() {
+  const app = document.getElementById('app');
   try {
-    const response = await fetch(path);
-    if (!response.ok) throw new Error(`Не удалось загрузить ${path}`);
-    return await response.text();
+    const [header, footer, ...sectionHtml] = await Promise.all([
+      loadHtml(pageFragments.header),
+      loadHtml(pageFragments.footer),
+      ...sections.map((section) => loadHtml(section.file))
+    ]);
+
+    app.innerHTML = header;
+    app.appendChild(renderNav());
+    sectionHtml.forEach((html) => app.insertAdjacentHTML('beforeend', html));
+    app.insertAdjacentHTML('beforeend', footer);
   } catch (error) {
-    const fallback = getFallback(path);
-    if (fallback) return fallback;
-    throw error;
+    app.innerHTML = `
+      <section class="card danger">
+        <h2>Ошибка загрузки контента</h2>
+        <p>Не удалось загрузить один или несколько файлов. Проверьте структуру проекта и запуск через локальный сервер.</p>
+      </section>
+    `;
+    console.error(error);
   }
 }
 
-async function loadFragment(targetId, path) {
-  document.getElementById(targetId).innerHTML = await fetchHtml(path);
-}
-
-async function loadSections() {
-  const sections = await Promise.all(sectionFiles.map(fetchHtml));
-  document.getElementById("sections").innerHTML = sections.join("\n");
-}
-
-(async function initBaza() {
-  try {
-    await loadFragment("header", "components/header.html");
-    await loadSections();
-    await loadFragment("footer", "components/footer.html");
-  } catch (error) {
-    console.error("Ошибка загрузки контента:", error);
-    document.getElementById("sections").innerHTML =
-      '<div class="important-banner"><span class="ib-icon">⚠️</span><span>Не удалось загрузить разделы. Откройте проект через локальный сервер (например, <code>python3 -m http.server</code>), если используете режим <code>file://</code>.</span></div>';
-  }
-})();
+init();
