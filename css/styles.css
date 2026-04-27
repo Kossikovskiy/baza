@@ -139,6 +139,21 @@ body {
   margin: 0 0 8px;
 }
 
+.group-label {
+  margin: 32px 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.section > .group-label:first-of-type {
+  margin-top: 0;
+}
+
 /* ── CARDS ────────────────────────────── */
 
 .card {
