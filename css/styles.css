@@ -11,7 +11,7 @@
   --danger:  #8E3430;
   --warn:    #9A5D2C;
   --border:  #DDD6CB;
-  --border-hover: #C4BBB0;
+  --border-h: #C4BBB0;
   --line:    #EAE4DA;
 }
 
@@ -108,9 +108,7 @@ body {
 
 /* ── SECTIONS ─────────────────────────── */
 
-.section {
-  display: none;
-}
+.section { display: none; }
 
 .section.is-active {
   display: block;
@@ -118,14 +116,8 @@ body {
 }
 
 @keyframes sectionIn {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .section > h2 {
@@ -157,18 +149,15 @@ body {
   transition: border-color 0.15s ease;
 }
 
-.card:hover {
-  border-color: var(--border-hover);
-}
+.card:hover { border-color: var(--border-h); }
 
-.card.danger {
-  border-left: 3px solid var(--danger);
-}
+.card.danger  { border-left: 3px solid var(--danger); }
+.card.warning { border-left: 3px solid var(--warn); }
 
 /* ── ALERT BOXES ──────────────────────── */
 
-.tip,
-.warning,
+.tip:not(.card),
+.warning:not(.card),
 .danger:not(.card) {
   margin-top: 12px;
   padding: 9px 13px;
@@ -176,13 +165,13 @@ body {
   line-height: 1.55;
 }
 
-.tip {
+.tip:not(.card) {
   background: #EAF0E3;
   border-left: 2px solid #8DB56C;
   color: #354B26;
 }
 
-.warning {
+.warning:not(.card) {
   background: #F9F0E7;
   border-left: 2px solid #C28850;
   color: #694018;
@@ -196,16 +185,10 @@ body {
 
 /* ── LISTS ────────────────────────────── */
 
-.steps {
-  margin: 10px 0 0;
-  padding-left: 22px;
-}
+.steps { margin: 10px 0 0; padding-left: 22px; }
 .steps li { margin-bottom: 6px; }
 
-.list {
-  margin: 10px 0 0;
-  padding-left: 20px;
-}
+.list { margin: 10px 0 0; padding-left: 20px; }
 .list li { margin-bottom: 5px; }
 
 /* ── SITUATION ────────────────────────── */
@@ -231,4 +214,140 @@ body {
   margin-bottom: 0;
   font-size: 13px;
   color: var(--muted);
+}
+
+/* ── TABLES ───────────────────────────── */
+
+.info-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+  margin-top: 12px;
+}
+
+.info-table th {
+  text-align: left;
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--muted);
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.info-table td {
+  padding: 9px 10px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+  line-height: 1.5;
+}
+
+.info-table tr:last-child td { border-bottom: none; }
+
+/* ── PH SCALE ─────────────────────────── */
+
+.ph-bar { margin: 14px 0 4px; }
+
+.ph-gradient {
+  height: 6px;
+  border-radius: 3px;
+  background: linear-gradient(to right,
+    #c0392b 0%, #e67e22 28%, #27ae60 50%, #2980b9 72%, #8e44ad 100%);
+  margin-bottom: 10px;
+}
+
+.ph-zones { display: flex; gap: 6px; }
+
+.ph-zone {
+  flex: 1;
+  font-size: 12px;
+  padding: 8px 10px;
+  line-height: 1.45;
+}
+
+.ph-zone strong { display: block; margin-bottom: 3px; }
+
+.ph-zone.acid    { background: #fdecea; border-left: 2px solid #BC4E48; color: #5a2018; }
+.ph-zone.neutral { background: #EAF0E3; border-left: 2px solid #8DB56C; color: #2e4420; }
+.ph-zone.alkali  { background: #e8f0fa; border-left: 2px solid #5b8fc8; color: #1c3856; }
+
+/* ── WASHER COMPARTMENTS ──────────────── */
+
+.compartments { display: flex; gap: 6px; margin-top: 12px; }
+
+.compartment {
+  flex: 1;
+  border: 1px solid var(--border);
+  padding: 10px 12px;
+}
+
+.comp-num {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--muted);
+  margin-bottom: 5px;
+}
+
+.comp-title {
+  font-weight: 700;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.comp-desc { color: var(--muted); font-size: 12.5px; line-height: 1.45; }
+
+/* ── ELECTRICAL PANEL ─────────────────── */
+
+.panel-diagram { margin-top: 14px; }
+
+.panel-row {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 6px;
+  justify-content: center;
+}
+
+.breaker {
+  border: 1px solid var(--border);
+  padding: 7px 12px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.3;
+  min-width: 76px;
+}
+
+.breaker.main-breaker {
+  border-color: var(--text);
+  font-size: 13px;
+  padding: 8px 28px;
+}
+
+.breaker.rcd {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.panel-label {
+  font-size: 11px;
+  color: var(--muted);
+  text-align: center;
+  margin-bottom: 6px;
+  letter-spacing: 0.3px;
+}
+
+/* ── RESPONSIVE ───────────────────────── */
+
+@media (max-width: 540px) {
+  .ph-zones,
+  .compartments { flex-direction: column; }
+
+  .panel-row { flex-wrap: wrap; }
+
+  .info-table { font-size: 12.5px; }
+  .info-table th,
+  .info-table td { padding: 7px 8px; }
 }
