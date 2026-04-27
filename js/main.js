@@ -4,13 +4,14 @@ const pageFragments = {
 };
 
 const sections = [
-  { id: 'home',      file: 'sections/home.html',      label: 'Быт' },
-  { id: 'repair',    file: 'sections/repair.html',    label: 'Ремонт' },
-  { id: 'systems',   file: 'sections/systems.html',   label: 'Системы' },
-  { id: 'emergency', file: 'sections/emergency.html', label: 'Экстренное' },
-  { id: 'chemicals', file: 'sections/chemicals.html', label: 'Химия' },
-  { id: 'house',     file: 'sections/house.html',     label: 'Частный дом' },
-  { id: 'auto',      file: 'sections/auto.html',      label: 'Авто' }
+  { id: 'home',        file: 'sections/home.html',        label: 'Быт' },
+  { id: 'repair',      file: 'sections/repair.html',      label: 'Ремонт' },
+  { id: 'electricity', file: 'sections/electricity.html', label: 'Электрика' },
+  { id: 'plumbing',    file: 'sections/plumbing.html',    label: 'Водопровод' },
+  { id: 'emergency',   file: 'sections/emergency.html',   label: 'Экстренное' },
+  { id: 'chemicals',   file: 'sections/chemicals.html',   label: 'Химия' },
+  { id: 'house',       file: 'sections/house.html',       label: 'Частный дом' },
+  { id: 'auto',        file: 'sections/auto.html',        label: 'Авто' }
 ];
 
 async function loadHtml(path) {
@@ -29,11 +30,8 @@ function activateSection(id) {
   document.querySelectorAll('.section').forEach((el) => {
     const wasActive = el.classList.contains('is-active');
     const willBeActive = el.id === validId;
-    if (!wasActive && willBeActive) {
-      el.classList.add('is-active');
-    } else if (wasActive && !willBeActive) {
-      el.classList.remove('is-active');
-    }
+    if (!wasActive && willBeActive) el.classList.add('is-active');
+    else if (wasActive && !willBeActive) el.classList.remove('is-active');
   });
 }
 
