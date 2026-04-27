@@ -339,6 +339,22 @@ body {
   letter-spacing: 0.3px;
 }
 
+/* ── DOCUMENT TEMPLATE ────────────────── */
+
+.doc-block {
+  margin-top: 12px;
+  padding: 14px 16px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  font-size: 13.5px;
+  line-height: 1.9;
+}
+
+.doc-block .doc-field {
+  color: var(--muted);
+  font-style: italic;
+}
+
 /* ── RESPONSIVE ───────────────────────── */
 
 @media (max-width: 540px) {

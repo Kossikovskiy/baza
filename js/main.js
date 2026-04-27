@@ -11,7 +11,10 @@ const sections = [
   { id: 'emergency',   file: 'sections/emergency.html',   label: 'Экстренное' },
   { id: 'chemicals',   file: 'sections/chemicals.html',   label: 'Химия' },
   { id: 'house',       file: 'sections/house.html',       label: 'Частный дом' },
-  { id: 'auto',        file: 'sections/auto.html',        label: 'Авто' }
+  { id: 'auto',        file: 'sections/auto.html',        label: 'Авто' },
+  { id: 'digital',     file: 'sections/digital.html',     label: 'Цифровая' },
+  { id: 'legal',       file: 'sections/legal.html',       label: 'Право' },
+  { id: 'finance',     file: 'sections/finance.html',     label: 'Финансы' }
 ];
 
 async function loadHtml(path) {
